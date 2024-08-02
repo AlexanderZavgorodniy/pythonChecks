@@ -22,11 +22,11 @@ def check_main_structure():
     check_structure_line = None
 
     for i, line in enumerate(lines):
-        if 'def main()' in line and main_start is None and i > 64:
+        if 'def main()' in line and main_start is None:
             main_start = i
-        if 'if __name__ == "__main__":' in line and i > 64:
+        if 'if __name__ == "__main__":' in line:
             main_end = i
-        elif "if __name__ == '__main__':" in line and i > 64:
+        elif "if __name__ == '__main__':" in line:
             main_end = i
         if not 'main()' in line and i-1 == main_end:
             raise RuntimeError("Неправильное использование конструкции 'if __name__ == \"__main__\":'")
@@ -62,11 +62,3 @@ def check_main_structure():
             raise RuntimeError("Все строки должны находиться в конструкции main.")
 
 
-check_main_structure()
-
-# здесь код, который нужно проверить
-def main():
-    print('Hello, world!')
-
-if __name__ == "__main__":
-    main()
