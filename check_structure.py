@@ -1,3 +1,11 @@
+"""
+Проверка кода, что он соответствует правилу
+def main():
+    #код
+if __name__ == "__main__":
+    main()
+"""
+
 import inspect
 
 
@@ -14,9 +22,11 @@ def check_main_structure():
     check_structure_line = None
 
     for i, line in enumerate(lines):
-        if 'def main()' in line and main_start is None and i > 50:
+        if 'def main()' in line and main_start is None and i > 64:
             main_start = i
-        if 'if __name__ == "__main__":' in line and i > 50:
+        if 'if __name__ == "__main__":' in line and i > 64:
+            main_end = i
+        elif "if __name__ == '__main__':" in line and i > 64:
             main_end = i
         if not 'main()' in line and i-1 == main_end:
             raise RuntimeError("Неправильное использование конструкции 'if __name__ == \"__main__\":'")
@@ -27,7 +37,7 @@ def check_main_structure():
     if main_start is None or main_end is None:
         raise RuntimeError("Не найдены конструкция 'def main():' и/или 'if __name__ == \"__main__\":'")
 
-    # для проверки docstring
+    # Для проверки docstring
     flag_single_quote = False
     flag_double_quote = False
     # Проверяем, что все строки после check_main_structure() находятся внутри конструкции main
@@ -55,3 +65,8 @@ def check_main_structure():
 check_main_structure()
 
 # здесь код, который нужно проверить
+def main():
+    print('Hello, world!')
+
+if __name__ == "__main__":
+    main()
