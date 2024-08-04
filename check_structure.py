@@ -43,7 +43,9 @@ def check_main_structure():
     # Проверяем, что все строки после check_main_structure() находятся внутри конструкции main
     for i, line in enumerate(lines):
         if i <= check_structure_line or line[:3] == "def" \
-                or line[:5] == "class" or line[0] == ' ' or line == '\n' or line[0] == "#":
+                or line[:5] == "class" or line[0] == ' ' \
+                or line == '\n' or line[0] == "#" \
+                or line[:4] == "from" or line[:6] == "import":
             continue
 
         # Проверка docsting
